@@ -1,6 +1,6 @@
 let timeSettings = {
     pomodoro: 1500,
-    'short-break': 300,
+    'short-break': 6,
     'long-break': 900
 };
 let timeLeft = timeSettings.pomodoro;
@@ -77,7 +77,7 @@ function startTimer() {
     clearInterval(timer);
     isTimerRunning = true;
     document.getElementById("toggleButton").textContent = "STOP";
-    document.getElementById("skipButton").style.display = "inline-block"; // Gomb megjelenítése
+    document.getElementById("skipButton").style.display = "inline-block";
 
     if (timeLeft > 0) {
         timeLeft--;
@@ -85,6 +85,10 @@ function startTimer() {
     }
 
     timer = setInterval(() => {
+        if (timeLeft < 5 && timeLeft > 1) {
+            playTickingSound();
+        }
+
         if (timeLeft > 0) {
             timeLeft--;
             updateDisplay();
@@ -94,6 +98,12 @@ function startTimer() {
         }
     }, 1000);
 }
+
+function playTickingSound() {
+    const tickingSound = document.getElementById("tickingSound");
+    tickingSound.play();
+}
+
 
 function stopTimer() {
     clearInterval(timer);
