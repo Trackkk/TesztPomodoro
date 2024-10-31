@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Timer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -11,9 +12,9 @@
 <body>
 <header class="navbar">
     <div class="nav-buttons">
-        <button>⚙️ Beállítások</button>
+        <button onclick="openSettings()"><i class="bi bi-gear-fill"></i>&nbspBeállítások</button>
         <a href="signUp.html" id="signInButton">👤 Regisztrálás</a>
-        <button>⋮</button>
+        <button><i class="bi bi-three-dots-vertical"></i></button>
     </div>
 </header>
 <main>
@@ -31,6 +32,9 @@
         </button>
         <audio id="soundEffect" src="clickSound.m4a" preload="auto"></audio>
         <audio id="tickingSound" src="tickingSound.m4a" preload="auto"></audio>
+        <audio id="alertBell" src="Harang.m4a" preload="auto"></audio>
+        <audio id="alertKitchen" src="Kitchen.m4a" preload="auto"></audio>
+        <audio id="tickingDigital" src="Digital.m4a" preload="auto"></audio>
     </div>
 
     <div class="task-container">
@@ -48,5 +52,72 @@
     </div>
 </main>
 <script src="script.js"></script>
+<!-- Settings Modal -->
+<div id="settingsModal" class="settings-modal">
+    <div class="settings-content">
+        <span class="close" onclick="closeSettings()">&times;</span>
+        <h2>Settings</h2>
+
+        <div class="settings-section">
+            <h3>Timer</h3>
+            <label>
+                Pomodoro (minutes)
+                <input type="number" id="pomodoroTime" value="25" min="1">
+            </label>
+            <label>
+                Short Break (minutes)
+                <input type="number" id="shortBreakTime" value="5" min="1">
+            </label>
+            <label>
+                Long Break (minutes)
+                <input type="number" id="longBreakTime" value="15" min="1">
+            </label>
+            <label>
+                <input type="checkbox" id="autoStartBreaks">
+                Auto Start Breaks
+            </label>
+            <label>
+                <input type="checkbox" id="autoStartPomodoros">
+                Auto Start Pomodoros
+            </label>
+            <label>
+                Long Break Interval
+                <input type="number" id="longBreakInterval" value="4">
+            </label>
+        </div>
+
+        <div class="settings-section">
+            <h3>Task</h3>
+            <label>
+                <input type="checkbox" id="autoCheckTasks">
+                Auto Check Tasks
+            </label>
+            <label>
+                <input type="checkbox" id="autoSwitchTasks">
+                Auto Switch Tasks
+            </label>
+        </div>
+
+        <div class="settings-section">
+            <h3>Sound</h3>
+            <label>
+                Alarm Sound
+                <select id="alarmSound">
+                    <option value="kitchen">Kitchen</option>
+                    <option value="bell">Bell</option>
+                    <option value="digital">Digital</option>
+                </select>
+            </label>
+            <label>
+                Volume
+                <input type="range" id="volumeControl" min="0" max="100" value="50">
+            </label>
+            <label>
+                Repeat
+                <input type="number" id="repeatCount" value="1" min="1">
+            </label>
+        </div>
+    </div>
+</div>
 </body>
 </html>
