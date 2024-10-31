@@ -179,7 +179,8 @@ function updateSkipButtonVisibility() {
 }
 
 function openSettings() {
-    document.getElementById("settingsModal").style.display = "flex";
+    document.getElementById("settingsModal").style.display = "flex"; // Megnyitja a modal-t
+    document.getElementById("settingsModal").scrollTop = 0; // Felfelé görgeti
 }
 
 function closeSettings() {

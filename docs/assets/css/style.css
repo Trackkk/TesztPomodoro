@@ -244,7 +244,7 @@ button:hover {
     }
 }
 .settings-modal {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
     z-index: 11;
     left: 0;
@@ -254,6 +254,7 @@ button:hover {
     background-color: rgba(0, 0, 0, 0.6);
     justify-content: center;
     align-items: center;
+    overflow-y: auto;
 }
 
 .settings-content {
@@ -262,6 +263,8 @@ button:hover {
     border-radius: 10px;
     width: 90%;
     max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
     color: #333;
     text-align: left;
 }
