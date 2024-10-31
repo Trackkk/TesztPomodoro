@@ -1,3 +1,4 @@
+/* Eddigi stílusok maradnak */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -46,7 +47,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #c0392b;
     padding: 10px 20px;
     width: 100%;
     position: fixed;
@@ -56,16 +56,17 @@ main {
 }
 
 .pomodoro-navbar {
-    background-color: #a52c24;
+    background-color: #a52c24; /* Sötét piros a Pomodoro módban */
 }
 
 .short-break-navbar {
-    background-color: #2c7b9a;
+    background-color: #2c7b9a; /* Sötétebb kék a Rövid Szünet módban */
 }
 
 .long-break-navbar {
-    background-color: #27ae60;
+    background-color: #27ae60; /* Sötétebb zöld a Hosszú Szünet módban */
 }
+
 
 .nav-buttons {
     display: flex;
@@ -73,7 +74,9 @@ main {
     align-items: center;
 }
 
-.nav-buttons a {
+.nav-buttons a,
+.nav-buttons button,
+.mode-switch a {
     background: rgba(255, 255, 255, 0.2);
     color: white;
     border: none;
@@ -82,41 +85,25 @@ main {
     cursor: pointer;
     height: 35px;
     font-size: 0.9em;
-    text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none; /* Eltávolítja az aláhúzást */
+    transition: background 0.3s;
 }
 
-.nav-buttons a:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.nav-buttons button, .mode-switch a {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    height: 35px;
-    font-size: 0.9em;
-}
-
-.nav-buttons button:hover {
+.nav-buttons a:hover,
+.nav-buttons button:hover,
+.mode-switch a:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
 .mode-switch {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-}
-
-.mode-switch a {
-    margin: 0 5px;
+    gap: 10px; /* Hely a mode-switch gombok között */
 }
 
 .mode-switch a.active {
@@ -131,6 +118,7 @@ main {
     max-width: 700px;
     margin-bottom: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px; /* Üres rész a Start gomb alatt */
 }
 
 #timeDisplay {
@@ -180,6 +168,25 @@ button:hover {
     border-radius: 5px;
 }
 
+#toggleButton {
+    margin: 20px 0;
+}
+
+#skipButton {
+    font-size: 2.3em;
+    border: none;
+    box-shadow: none;
+}
+
+#skipButton:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#skipButton:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 #spotifyPlayer {
     border-radius: 12px;
     width: 350px;
@@ -206,7 +213,8 @@ button:hover {
         padding: 5px;
     }
 
-    .timer-display, .task-container {
+    .timer-display,
+    .task-container {
         width: 100%;
         padding: 15px;
         font-size: 0.9em;

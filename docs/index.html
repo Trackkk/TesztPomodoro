@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Timer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -19,16 +20,17 @@
     <div class="timer-display">
         <nav class="mode-switch">
             <a href="#" id="pomodoroLink" onclick="selectMode('pomodoro')">Pomodoro</a>
-            <a href="#" id="short-breakLink" onclick="selectMode('short-break')">Short Break</a>
-            <a href="#" id="long-breakLink" onclick="selectMode('long-break')">Long Break</a>
+            <a href="#" id="short-breakLink" onclick="selectMode('short-break')">Rövid Szünet</a>
+            <a href="#" id="long-breakLink" onclick="selectMode('long-break')">Hosszú Szünet</a>
         </nav>
         <h2 id="modeTitle">Pomodoro</h2>
         <div id="timeDisplay">25:00</div>
-        <button onclick="toggleTimer(); playSound();" id="toggleButton">START</button>
-        <button onclick="skipSession();" id="skipButton">SKIP</button>
+        <button onclick="toggleTimer(); playSound();" id="toggleButton">KEZDÉS</button>
+        <button class="btn btn-outline-light" onclick="skipSession();" id="skipButton">
+            <i class="bi bi-skip-end-fill"></i>
+        </button>
         <audio id="soundEffect" src="clickSound.m4a" preload="auto"></audio>
         <audio id="tickingSound" src="tickingSound.m4a" preload="auto"></audio>
-
     </div>
 
     <div class="task-container">

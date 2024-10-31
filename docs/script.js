@@ -1,6 +1,6 @@
 let timeSettings = {
     pomodoro: 1500,
-    'short-break': 6,
+    'short-break': 300,
     'long-break': 900
 };
 let timeLeft = timeSettings.pomodoro;
@@ -12,7 +12,7 @@ let pomodoroCount = 0;
 document.addEventListener("DOMContentLoaded", function () {
     selectMode('pomodoro');
     updateDisplay();
-    updateSkipButtonVisibility(); // Frissítjük a gomb láthatóságát
+    updateSkipButtonVisibility();
 });
 
 function updateDisplay() {
@@ -36,12 +36,12 @@ function selectMode(selectedMode) {
         document.querySelector('.navbar').classList.remove('short-break-navbar', 'long-break-navbar');
     } else if (mode === 'short-break') {
         document.body.classList.add('short-break-mode');
-        document.getElementById("modeTitle").textContent = "Short Break";
+        document.getElementById("modeTitle").textContent = "Rövid Szünet";
         document.querySelector('.navbar').classList.add('short-break-navbar');
         document.querySelector('.navbar').classList.remove('pomodoro-navbar', 'long-break-navbar');
     } else if (mode === 'long-break') {
         document.body.classList.add('long-break-mode');
-        document.getElementById("modeTitle").textContent = "Long Break";
+        document.getElementById("modeTitle").textContent = "Hosszú Szünet";
         document.querySelector('.navbar').classList.add('long-break-navbar');
         document.querySelector('.navbar').classList.remove('pomodoro-navbar', 'short-break-navbar');
     }
@@ -50,7 +50,7 @@ function selectMode(selectedMode) {
     document.getElementById(`${mode}Link`).classList.add("active");
 
     updateTitle();
-    updateSkipButtonVisibility(); // Frissítjük a gomb láthatóságát
+    updateSkipButtonVisibility();
 }
 
 function updateTitle() {
@@ -76,7 +76,7 @@ function toggleTimer() {
 function startTimer() {
     clearInterval(timer);
     isTimerRunning = true;
-    document.getElementById("toggleButton").textContent = "STOP";
+    document.getElementById("toggleButton").textContent = "ÁLLJ";
     document.getElementById("skipButton").style.display = "inline-block";
 
     if (timeLeft > 0) {
