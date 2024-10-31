@@ -7,22 +7,54 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <style>
+        .dropdown {
+            display: none; /* Kezdetben elrejtve */
+            position: absolute; /* Pozicionáljuk az elemhez */
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .dropdown a:hover {
+            background-color: #f0f0f0; /* Hover effektus */
+        }
+
+        .nav-buttons {
+            position: relative; /* A dropdown helyének beállítása */
+        }
+    </style>
 </head>
 <body>
 <header class="navbar">
     <div class="nav-buttons">
         <button onclick="openSettings()"><i class="bi bi-gear-fill"></i>&nbspBeállítások</button>
         <a href="signUp.html" id="signInButton"><i class="bi bi-person-fill"></i>&nbspRegisztrálás</a>
-        <button><i class="bi bi-three-dots-vertical"></i></button>
+        <button id="menuButton" onclick="toggleDropdown()"><i class="bi bi-three-dots-vertical"></i></button>
+
+        <!-- Legördülő menü -->
+        <div id="dropdownMenu" class="dropdown">
+            <a href="login.html"><i class="bi bi-box-arrow-in-right"></i>&nbspBejelentkezés</a>
+            <a href="calendar.html"><i class="bi bi-calendar"></i>&nbspNaptár</a>
+        </div>
     </div>
 </header>
 <main>
     <div class="timer-display">
         <nav class="mode-switch">
-            <a href="#" id="pomodoroLink" onclick="selectMode('pomodoro')">Pomodoro</a>
-            <a href="#" id="short-breakLink" onclick="selectMode('short-break')">Rövid Szünet</a>
-            <a href="#" id="long-breakLink" onclick="selectMode('long-break')">Hosszú Szünet</a>
+            <a id="pomodoroLink" onclick="selectMode('pomodoro')">Pomodoro</a>
+            <a id="short-breakLink" onclick="selectMode('short-break')">Rövid Szünet</a>
+            <a id="long-breakLink" onclick="selectMode('long-break')">Hosszú Szünet</a>
         </nav>
         <h2 id="modeTitle">Pomodoro</h2>
         <div id="timeDisplay">25:00</div>
@@ -30,12 +62,12 @@
         <button class="btn btn-outline-light" onclick="skipSession(); skipSound();" id="skipButton">
             <i class="bi bi-skip-end-fill"></i>
         </button>
-        <audio id="soundEffect" src="assets/sounds/Click.m4a" preload="auto"></audio>
-        <audio id="tickingSound" src="assets/sounds/Tick.m4a" preload="auto"></audio>
-        <audio id="alertBell" src="assets/sounds/Bell.m4a" preload="auto"></audio>
-        <audio id="alertKitchen" src="assets/sounds/Kitchen.m4a" preload="auto"></audio>
-        <audio id="tickingDigital" src="assets/sounds/Digital.m4a" preload="auto"></audio>
-        <audio id="skipSound" src="assets/sounds/Skip.m4a" preload="auto"></audio>
+        <audio id="soundEffect" src="static/sounds/Click.m4a" preload="auto"></audio>
+        <audio id="tickingSound" src="static/sounds/Tick.m4a" preload="auto"></audio>
+        <audio id="alertBell" src="static/sounds/Bell.m4a" preload="auto"></audio>
+        <audio id="alertKitchen" src="static/sounds/Kitchen.m4a" preload="auto"></audio>
+        <audio id="alertDigital" src="static/sounds/Digital.m4a" preload="auto"></audio>
+        <audio id="skipSound" src="static/sounds/Skip.m4a" preload="auto"></audio>
     </div>
 
     <div class="task-container">
@@ -52,56 +84,99 @@
         </iframe>
     </div>
 </main>
-<script src="script.js"></script>
+<script src="static/scripts/settings.js"></script>
+<script src="static/scripts/tasks.js"></script>
+<script src="static/scripts/timer.js"></script>
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById("dropdownMenu");
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block"; // Megjeleníti vagy eltünteti
+    }
+
+    // Kattintás a dokumentum más területére, hogy elrejtsük a menüt
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById("dropdownMenu");
+        const button = document.getElementById("menuButton");
+        if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+
+    // Hangfájlok elérési útja
+    const alertSounds = {
+        kitchen: 'static/sounds/Kitchen.m4a',
+        bell: 'static/sounds/Bell.m4a',
+        digital: 'static/sounds/Digital.m4a'
+    };
+
+    // Lejátszási funkció
+    function playAlertSound() {
+        const selectedSound = document.getElementById("alarmSound").value; // Kiválasztott hang lekérése
+        const volume = document.getElementById("volumeControl").value / 100; // Hangerő lekérése (0-1 skálán)
+
+        const audio = new Audio(alertSounds[selectedSound]); // Új Audio objektum létrehozása
+        audio.volume = volume; // Hangerő beállítása
+        audio.play(); // Hang lejátszása
+    }
+</script>
+
 <!-- Settings Modal -->
 <div id="settingsModal" class="settings-modal">
     <div class="settings-content">
         <span class="close" onclick="closeSettings()">&times;</span>
-        <h2>Settings</h2>
+        <h2>Beállítások</h2>
 
         <div class="settings-section">
-            <h3>Timer</h3>
+            <h3>Időzítő</h3>
             <label>
-                Pomodoro (minutes)
+                Pomodoro (perc)
                 <input type="number" id="pomodoroTime" value="25" min="1">
             </label>
             <label>
-                Short Break (minutes)
+                Rövid Szünet (perc)
                 <input type="number" id="shortBreakTime" value="5" min="1">
             </label>
             <label>
-                Long Break (minutes)
+                Hosszú Szünet (perc)
                 <input type="number" id="longBreakTime" value="15" min="1">
             </label>
             <label>
-                <input type="checkbox" id="autoStartBreaks">
-                Auto Start Breaks
+                Automatikus Szünetek Indítása
+                <label class="switch">
+                    <input type="checkbox" id="autoStartBreaks">
+                    <span class="slider"></span>
+                </label>
             </label>
             <label>
-                <input type="checkbox" id="autoStartPomodoros">
-                Auto Start Pomodoros
+                Automatikus Pomodorók Indítása
+                <label class="switch">
+                    <input type="checkbox" id="autoStartPomodoros">
+                    <span class="slider"></span>
+                </label>
             </label>
             <label>
-                Long Break Interval
+                Hosszú Szünet Intervallum
                 <input type="number" id="longBreakInterval" value="4">
             </label>
         </div>
         <div class="settings-section">
-            <h3>Sound</h3>
+            <h3>Hang</h3>
             <label>
-                Alarm Sound
+                Riasztó Hang
                 <select id="alarmSound">
-                    <option value="kitchen">Kitchen</option>
-                    <option value="bell">Bell</option>
-                    <option value="digital">Digital</option>
+                    <option value="digital">Digitális</option>
+                    <option value="bell">Harang</option>
+                    <option value="kitchen">Konyha</option>
                 </select>
             </label>
             <label>
-                Volume
+                Hangerő
                 <input type="range" id="volumeControl" min="0" max="100" value="50">
             </label>
+            <button id="playAlertButton" onclick="playAlertSound()">Lejátszás</button>
         </div>
     </div>
 </div>
+
 </body>
 </html>
