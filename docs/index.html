@@ -13,7 +13,7 @@
 <header class="navbar">
     <div class="nav-buttons">
         <button onclick="openSettings()"><i class="bi bi-gear-fill"></i>&nbspBeállítások</button>
-        <a href="signUp.html" id="signInButton">👤 Regisztrálás</a>
+        <a href="signUp.html" id="signInButton"><i class="bi bi-person-fill"></i>&nbspRegisztrálás</a>
         <button><i class="bi bi-three-dots-vertical"></i></button>
     </div>
 </header>
@@ -27,14 +27,15 @@
         <h2 id="modeTitle">Pomodoro</h2>
         <div id="timeDisplay">25:00</div>
         <button onclick="toggleTimer(); playSound();" id="toggleButton">KEZDÉS</button>
-        <button class="btn btn-outline-light" onclick="skipSession();" id="skipButton">
+        <button class="btn btn-outline-light" onclick="skipSession(); skipSound();" id="skipButton">
             <i class="bi bi-skip-end-fill"></i>
         </button>
-        <audio id="soundEffect" src="clickSound.m4a" preload="auto"></audio>
-        <audio id="tickingSound" src="tickingSound.m4a" preload="auto"></audio>
-        <audio id="alertBell" src="Harang.m4a" preload="auto"></audio>
-        <audio id="alertKitchen" src="Kitchen.m4a" preload="auto"></audio>
-        <audio id="tickingDigital" src="Digital.m4a" preload="auto"></audio>
+        <audio id="soundEffect" src="assets/sounds/Click.m4a" preload="auto"></audio>
+        <audio id="tickingSound" src="assets/sounds/Tick.m4a" preload="auto"></audio>
+        <audio id="alertBell" src="assets/sounds/Bell.m4a" preload="auto"></audio>
+        <audio id="alertKitchen" src="assets/sounds/Kitchen.m4a" preload="auto"></audio>
+        <audio id="tickingDigital" src="assets/sounds/Digital.m4a" preload="auto"></audio>
+        <audio id="skipSound" src="assets/sounds/Skip.m4a" preload="auto"></audio>
     </div>
 
     <div class="task-container">

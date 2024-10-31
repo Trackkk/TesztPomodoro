@@ -136,6 +136,11 @@ function skipSession() {
     handleSessionEnd();
 }
 
+function skipSound() {
+    const skipSound = document.getElementById("skipSound");
+    skipSound.play();
+}
+
 function addTask() {
     const taskName = prompt("Enter task name:");
     if (taskName) {

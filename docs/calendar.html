@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reszponzív Naptár</title>
+    <title>Pomodoro - Naptár</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Alapvető beállítások */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -24,7 +25,6 @@
             min-height: 100vh;
         }
 
-        /* Navigációs sáv */
         .navbar {
             width: 100%;
             background-color: #333;
@@ -53,7 +53,6 @@
             background-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Naptár konténer */
         .calendar-container {
             max-width: 1000px;
             width: 90%;
@@ -72,7 +71,7 @@
         }
 
         .day, .day-header {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.25);
             color: white;
             padding: 20px;
             border-radius: 5px;
@@ -97,10 +96,9 @@
         }
 
         .other-month {
-            color: #aaa;
+            color: rgba(34, 34, 34, 0.34);
         }
 
-        /* Navigáció gombok */
         .navigation {
             display: flex;
             justify-content: space-between;
@@ -110,67 +108,79 @@
         }
 
         .navigation button {
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: transparent; /* Átlátszó háttér */
             color: white;
-            border: none;
+            border: none; /* Nincs keret */
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-size: 2.3em; /* Nagyobb betűméret */
         }
 
         .navigation button:hover {
-            background-color: rgba(255, 255, 255, 0.3);
+            color: rgba(0, 0, 0, 255);
+        }
+
+        .navigation button:focus {
+            color: white;
+            outline: none;
+            box-shadow: none; /* Nincs keret, amikor fókuszálva van */
         }
 
         #current-month {
             font-size: 1.5em;
             font-weight: bold;
+            text-align: center;
+            flex: 1;
         }
 
-        /* Reszponzív beállítások kisebb képernyőkre */
         @media (max-width: 768px) {
             .calendar {
-                grid-template-columns: repeat(3, 1fr); /* Csökkenti az oszlopok számát kisebb képernyőkön */
+                grid-template-columns: repeat(7, 1fr);
             }
 
             .day, .day-header {
                 font-size: 0.9em;
-                padding: 15px;
+                padding: 12px;
+            }
+
+            .navigation {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            #current-month {
+                margin: 10px 0;
+                text-align: center;
+                font-size: 1.2em;
             }
         }
 
         @media (max-width: 480px) {
-            .calendar {
-                grid-template-columns: repeat(2, 1fr); /* Még kisebb képernyőkön tovább csökkenti az oszlopok számát */
+            .day, .day-header {
+                font-size: 0.8em;
+                padding: 8px;
             }
 
             .navbar a {
                 font-size: 0.8em;
                 padding: 5px 10px;
             }
-
-            .day, .day-header {
-                font-size: 0.8em;
-                padding: 10px;
-            }
         }
     </style>
 </head>
 <body>
 
-<!-- Navigációs sáv -->
 <div class="navbar">
-    <a href="/">Főoldal</a>
-    <a href="/logout">Kijelentkezés</a>
+    <a href="index.html">Főoldal</a>
+    <a href="login.html">Kijelentkezés</a>
 </div>
 
-<!-- Naptár konténer -->
 <div class="calendar-container">
     <div class="navigation">
-        <button id="prev-month">Előző hónap</button>
+        <button id="prev-month"><i class="bi bi-arrow-left-square-fill"></i></button>
         <h2 id="current-month"></h2>
-        <button id="next-month">Következő hónap</button>
+        <button id="next-month"><i class="bi bi-arrow-right-square-fill"></i></button>
     </div>
 
     <div class="calendar" id="calendar"></div>
@@ -184,10 +194,8 @@
 
     let currentDate = new Date();
 
-    // A hét napjainak nevei, hétfő az első
     const daysOfWeek = ["H", "K", "Sze", "Cs", "P", "Szo", "V"];
 
-    // Hónapok nevei
     const months = [
         "január", "február", "március", "április", "május", "június",
         "július", "augusztus", "szeptember", "október", "november", "december"
@@ -197,12 +205,10 @@
         calendar.innerHTML = '';
         const firstDayOfMonth = new Date(year, month, 1);
         const daysInMonth = new Date(year, month + 1, 0).getDate();
-        const firstDayOfWeek = (firstDayOfMonth.getDay() + 6) % 7; // Átváltás hétfővel kezdődő hétre
+        const firstDayOfWeek = (firstDayOfMonth.getDay() + 6) % 7;
 
-        // Aktuális hónap és év kiírása
         currentMonthDisplay.textContent = `${year}. ${months[month]}`;
 
-        // Hét napjainak címkéi
         daysOfWeek.forEach(day => {
             const dayHeader = document.createElement('div');
             dayHeader.classList.add('day-header');
@@ -210,7 +216,6 @@
             calendar.appendChild(dayHeader);
         });
 
-        // Előző hónap napjai
         const daysInPrevMonth = new Date(year, month, 0).getDate();
         for (let i = firstDayOfWeek - 1; i >= 0; i--) {
             const prevMonthDay = document.createElement('div');
@@ -219,7 +224,6 @@
             calendar.appendChild(prevMonthDay);
         }
 
-        // A hónap napjainak létrehozása
         for (let day = 1; day <= daysInMonth; day++) {
             const dayElement = document.createElement('div');
             dayElement.classList.add('day');
@@ -228,26 +232,29 @@
             const today = new Date();
             const currentDay = new Date(year, month, day);
 
-            // Ma dátum kiemelése
             if (today.toDateString() === currentDay.toDateString()) {
                 dayElement.classList.add('today');
             }
 
-            // Vasárnap piros kiemelése
-            if (currentDay.getDay() === 0) {
+            if (currentDay.getDay() === 0) { // Vasárnap
                 dayElement.classList.add('sunday');
             }
 
             calendar.appendChild(dayElement);
         }
 
-        // Következő hónap napjai
-        const totalCells = 35;
+        const totalCells = 49; // Fix 7 * 7
         const remainingCells = totalCells - calendar.children.length;
         for (let i = 1; i <= remainingCells; i++) {
             const nextMonthDay = document.createElement('div');
             nextMonthDay.classList.add('day', 'other-month');
             nextMonthDay.textContent = i;
+
+            // Ha vasárnap, akkor piros színnel kiemelni
+            if (new Date(year, month + 1, i).getDay() === 0) {
+                nextMonthDay.classList.add('sunday');
+            }
+
             calendar.appendChild(nextMonthDay);
         }
     }
@@ -262,7 +269,6 @@
         generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
     });
 
-    // Kezdő dátum megjelenítése
     generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
 </script>
 </body>
