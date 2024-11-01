@@ -272,8 +272,8 @@ button:hover {
 .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 40px;
+    height: 20px;
 }
 
 .switch input {
@@ -291,27 +291,27 @@ button:hover {
     bottom: 0;
     background-color: #ccc;
     transition: .4s;
-    border-radius: 34px;
+    border-radius: 20px;
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
     background-color: white;
     transition: .4s;
     border-radius: 50%;
 }
 
 input:checked + .slider {
-    background-color: #4CAF50; /* Zöld szín, ha bekapcsolt */
+    background-color: #4CAF50;
 }
 
 input:checked + .slider:before {
-    transform: translateX(26px);
+    transform: translateX(20px);
 }
 
 #playAlertButton {
@@ -451,6 +451,6 @@ button:hover, .nav-buttons a:hover, .mode-switch a:hover {
     }
 
     .settings-modal {
-        padding: 40px;
+        padding: 0 10px;
     }
 }
