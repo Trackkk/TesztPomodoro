@@ -1,6 +1,6 @@
 function openSettings() {
-    document.getElementById("settingsModal").style.display = "flex"; // Megnyitja a modal-t
-    document.getElementById("settingsModal").scrollTop = 0; // Felfelé görgeti
+    document.getElementById("settingsModal").style.display = "flex";
+    document.getElementById("settingsModal").scrollTop = 0;
 }
 
 function closeSettings() {
@@ -11,7 +11,7 @@ function updateTimeSettings() {
     const pomodoroMinutes = parseInt(document.getElementById("pomodoroTime").value) || 25;
     const shortBreakMinutes = parseInt(document.getElementById("shortBreakTime").value) || 5;
     const longBreakMinutes = parseInt(document.getElementById("longBreakTime").value) || 15;
-    longBreakInterval = parseInt(document.getElementById("longBreakInterval").value) || 4; // Update long break interval
+    longBreakInterval = parseInt(document.getElementById("longBreakInterval").value) || 4;
 
     timeSettings.pomodoro = pomodoroMinutes * 60;
     timeSettings['short-break'] = shortBreakMinutes * 60;
@@ -40,7 +40,7 @@ function applySettings() {
     console.log({
         autoStartBreaks,
         autoStartPomodoros,
-        longBreakInterval,  // Ensure this is logged for debugging
+        longBreakInterval,
         autoCheckTasks,
         autoSwitchTasks,
         alarmSound,
@@ -62,14 +62,42 @@ document.addEventListener("DOMContentLoaded", function() {
     const pomodoroInput = document.getElementById("pomodoroTime");
     const shortBreakInput = document.getElementById("shortBreakTime");
     const longBreakInput = document.getElementById("longBreakTime");
-    const longBreakIntervalInput = document.getElementById("longBreakInterval"); // New input for long break interval
+    const longBreakIntervalInput = document.getElementById("longBreakInterval");
 
     if (pomodoroInput && shortBreakInput && longBreakInput && longBreakIntervalInput) {
         pomodoroInput.addEventListener("input", updateTimeSettings);
         shortBreakInput.addEventListener("input", updateTimeSettings);
         longBreakInput.addEventListener("input", updateTimeSettings);
-        longBreakIntervalInput.addEventListener("input", updateTimeSettings); // Listen for changes
+        longBreakIntervalInput.addEventListener("input", updateTimeSettings);
     } else {
         console.error("One or more input elements not found");
     }
 });
+
+function toggleDropdown() {
+    const dropdown = document.getElementById("dropdownMenu");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById("dropdownMenu");
+    const button = document.getElementById("menuButton");
+    if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+        dropdown.style.display = 'none';
+    }
+});
+
+const alertSounds = {
+    bell: 'static/sounds/Bell.m4a',
+    digital: 'static/sounds/Digital.m4a',
+    kitchen: 'static/sounds/Kitchen.m4a'
+};
+
+function playAlertSound() {
+    const selectedSound = document.getElementById("alarmSound").value;
+    const volume = document.getElementById("volumeControl").value / 100;
+
+    const audio = new Audio(alertSounds[selectedSound]);
+    audio.volume = volume;
+    audio.play();
+}

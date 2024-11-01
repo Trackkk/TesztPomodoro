@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,32 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/style.css">
-    <style>
-        .dropdown {
-            display: none; /* Kezdetben elrejtve */
-            position: absolute; /* Pozicionáljuk az elemhez */
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        .dropdown a {
-            display: block;
-            padding: 10px;
-            color: black;
-            text-decoration: none;
-        }
-
-        .dropdown a:hover {
-            background-color: #f0f0f0; /* Hover effektus */
-        }
-
-        .nav-buttons {
-            position: relative; /* A dropdown helyének beállítása */
-        }
-    </style>
 </head>
 <body>
 <header class="navbar">
@@ -41,11 +15,9 @@
         <button onclick="openSettings()"><i class="bi bi-gear-fill"></i>&nbspBeállítások</button>
         <a href="signUp.html" id="signInButton"><i class="bi bi-person-fill"></i>&nbspRegisztrálás</a>
         <button id="menuButton" onclick="toggleDropdown()"><i class="bi bi-three-dots-vertical"></i></button>
-
-        <!-- Legördülő menü -->
         <div id="dropdownMenu" class="dropdown">
-            <a href="login.html"><i class="bi bi-box-arrow-in-right"></i>&nbspBejelentkezés</a>
-            <a href="calendar.html"><i class="bi bi-calendar"></i>&nbspNaptár</a>
+            <a id="dropdown1" href="login.html"><i class="bi bi-box-arrow-in-right"></i>&nbspBejelentkezés</a>
+            <a id="dropdown2" href="calendar.html"><i class="bi bi-calendar"></i>&nbspNaptár</a>
         </div>
     </div>
 </header>
@@ -69,11 +41,10 @@
         <audio id="alertDigital" src="static/sounds/Digital.m4a" preload="auto"></audio>
         <audio id="skipSound" src="static/sounds/Skip.m4a" preload="auto"></audio>
     </div>
-
     <div class="task-container">
-        <h3>Tasks</h3>
+        <h3>Feladatok</h3>
         <div id="tasksContainer">
-            <button class="add-task-btn" onclick="addTask()">+ Add Task</button>
+            <button class="add-task-btn" onclick="addTask()">+ Feladat hozzáadása</button>
         </div>
     </div>
 
@@ -87,40 +58,6 @@
 <script src="static/scripts/settings.js"></script>
 <script src="static/scripts/tasks.js"></script>
 <script src="static/scripts/timer.js"></script>
-<script>
-    function toggleDropdown() {
-        const dropdown = document.getElementById("dropdownMenu");
-        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block"; // Megjeleníti vagy eltünteti
-    }
-
-    // Kattintás a dokumentum más területére, hogy elrejtsük a menüt
-    document.addEventListener('click', function(event) {
-        const dropdown = document.getElementById("dropdownMenu");
-        const button = document.getElementById("menuButton");
-        if (!dropdown.contains(event.target) && !button.contains(event.target)) {
-            dropdown.style.display = 'none';
-        }
-    });
-
-    // Hangfájlok elérési útja
-    const alertSounds = {
-        kitchen: 'static/sounds/Kitchen.m4a',
-        bell: 'static/sounds/Bell.m4a',
-        digital: 'static/sounds/Digital.m4a'
-    };
-
-    // Lejátszási funkció
-    function playAlertSound() {
-        const selectedSound = document.getElementById("alarmSound").value; // Kiválasztott hang lekérése
-        const volume = document.getElementById("volumeControl").value / 100; // Hangerő lekérése (0-1 skálán)
-
-        const audio = new Audio(alertSounds[selectedSound]); // Új Audio objektum létrehozása
-        audio.volume = volume; // Hangerő beállítása
-        audio.play(); // Hang lejátszása
-    }
-</script>
-
-<!-- Settings Modal -->
 <div id="settingsModal" class="settings-modal">
     <div class="settings-content">
         <span class="close" onclick="closeSettings()">&times;</span>
@@ -171,12 +108,11 @@
             </label>
             <label>
                 Hangerő
-                <input type="range" id="volumeControl" min="0" max="100" value="50">
+                <input type="range" id="volumeControl" min="0" max="100" value="50"/>
             </label>
             <button id="playAlertButton" onclick="playAlertSound()">Lejátszás</button>
         </div>
     </div>
 </div>
-
 </body>
 </html>

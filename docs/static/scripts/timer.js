@@ -1,5 +1,5 @@
 let timeSettings = {
-    pomodoro: 1500, 'short-break': 300, 'long-break': 900
+    pomodoro: 1500, 'short-break': 3, 'long-break': 900
 };
 let timeLeft = timeSettings.pomodoro;
 let timer;
@@ -88,6 +88,7 @@ function startTimer() {
             updateDisplay();
         } else {
             clearInterval(timer);
+            playAlarmSound();
             handleSessionEnd();
         }
     }, 1000);
@@ -101,14 +102,11 @@ function playTickingSound() {
 function stopTimer() {
     clearInterval(timer);
     isTimerRunning = false;
-    document.getElementById("toggleButton").textContent = "START";
+    document.getElementById("toggleButton").textContent = "FOLYTATÁS";
     document.getElementById("skipButton").style.display = "none";
 }
 
 function handleSessionEnd() {
-    // Play the selected alarm sound
-    playAlarmSound();
-
     if (mode === 'pomodoro') {
         pomodoroCount++;
         if (pomodoroCount === longBreakInterval) {
