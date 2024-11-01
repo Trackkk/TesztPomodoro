@@ -4,10 +4,15 @@ function openSettings() {
 }
 
 function closeSettings() {
+    applySettings();
     document.getElementById("settingsModal").style.display = "none";
 }
 
-function updateTimeSettings() {
+function saveSettings() {
+    closeSettings();
+}
+
+function updateTimeSettings(){
     const pomodoroMinutes = parseInt(document.getElementById("pomodoroTime").value) || 25;
     const shortBreakMinutes = parseInt(document.getElementById("shortBreakTime").value) || 5;
     const longBreakMinutes = parseInt(document.getElementById("longBreakTime").value) || 15;
@@ -29,40 +34,45 @@ function updateTimeSettings() {
 }
 
 function applySettings() {
-    const autoStartBreaks = document.getElementById("autoStartBreaks").checked;
-    const autoStartPomodoros = document.getElementById("autoStartPomodoros").checked;
-    const autoCheckTasks = document.getElementById("autoCheckTasks").checked;
-    const autoSwitchTasks = document.getElementById("autoSwitchTasks").checked;
     const alarmSound = document.getElementById("alarmSound").value;
     const volume = document.getElementById("volumeControl").value;
-    const repeatCount = parseInt(document.getElementById("repeatCount").value) || 1;
+    window.volume = volume / 100;
+    updateTimeSettings();
 
     console.log({
-        autoStartBreaks,
-        autoStartPomodoros,
         longBreakInterval,
-        autoCheckTasks,
-        autoSwitchTasks,
         alarmSound,
-        volume,
-        repeatCount
+        volume: window.volume
     });
-
-    closeSettings();
 }
 
-window.onclick = function(event) {
+window.onclick = function (event) {
     const modal = document.getElementById("settingsModal");
     if (event.target === modal) {
         closeSettings();
     }
 };
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
+    const volumeControl = document.getElementById("volumeControl");
     const pomodoroInput = document.getElementById("pomodoroTime");
     const shortBreakInput = document.getElementById("shortBreakTime");
     const longBreakInput = document.getElementById("longBreakTime");
     const longBreakIntervalInput = document.getElementById("longBreakInterval");
+
+    if (volumeControl) {
+        volumeControl.value = 50;
+        window.volume = volumeControl.value / 100;
+
+        volumeControl.addEventListener("input", function () {
+            const volumeValue = document.getElementById("volumeValue");
+            volumeValue.textContent = this.value + "%";
+
+            window.volume = this.value / 100;
+        });
+    } else {
+        console.error("Volume control element not found");
+    }
 
     if (pomodoroInput && shortBreakInput && longBreakInput && longBreakIntervalInput) {
         pomodoroInput.addEventListener("input", updateTimeSettings);
@@ -79,7 +89,7 @@ function toggleDropdown() {
     dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 }
 
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
     const dropdown = document.getElementById("dropdownMenu");
     const button = document.getElementById("menuButton");
     if (!dropdown.contains(event.target) && !button.contains(event.target)) {
@@ -88,15 +98,12 @@ document.addEventListener('click', function(event) {
 });
 
 const alertSounds = {
-    bell: 'static/sounds/Bell.m4a',
-    digital: 'static/sounds/Digital.m4a',
-    kitchen: 'static/sounds/Kitchen.m4a'
+    bell: 'static/sounds/Bell.m4a', digital: 'static/sounds/Digital.m4a', kitchen: 'static/sounds/Kitchen.m4a'
 };
 
 function playAlertSound() {
     const selectedSound = document.getElementById("alarmSound").value;
     const volume = document.getElementById("volumeControl").value / 100;
-
     const audio = new Audio(alertSounds[selectedSound]);
     audio.volume = volume;
     audio.play();

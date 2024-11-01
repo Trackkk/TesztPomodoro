@@ -1,4 +1,4 @@
-function addTask() {
+function addTask(){
     const taskName = prompt("Enter task name:");
     if (taskName) {
         const taskContainer = document.createElement("div");
@@ -28,10 +28,12 @@ function deleteTask(deleteButton) {
 
 function playSound() {
     const playsound = document.getElementById("soundEffect");
+    playsound.volume = window.volume;
     playsound.play();
 }
 
 function skipSound() {
     const skipSound = document.getElementById("skipSound");
+    skipSound.volume = window.volume;
     skipSound.play();
 }

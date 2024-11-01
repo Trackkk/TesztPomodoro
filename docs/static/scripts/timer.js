@@ -96,6 +96,7 @@ function startTimer() {
 
 function playTickingSound() {
     const tickingSound = document.getElementById("tickingSound");
+    tickingSound.volume = window.volume;
     tickingSound.play();
 }
 
@@ -106,7 +107,7 @@ function stopTimer() {
     document.getElementById("skipButton").style.display = "none";
 }
 
-function handleSessionEnd() {
+function handleSessionEnd(){
     if (mode === 'pomodoro') {
         pomodoroCount++;
         if (pomodoroCount === longBreakInterval) {
@@ -128,13 +129,18 @@ function handleSessionEnd() {
 function playAlarmSound() {
     const alarmSound = document.getElementById("alarmSound").value;
     const soundEffect = document.getElementById(`alert${alarmSound.charAt(0).toUpperCase() + alarmSound.slice(1)}`);
-    soundEffect.currentTime = 0; // Reset sound to start
+    soundEffect.currentTime = 0;
+    soundEffect.volume = window.volume;
     soundEffect.play();
 }
 
 function skipSession() {
     stopTimer();
     handleSessionEnd();
+
+    const skipSound = document.getElementById("skipSound");
+    skipSound.volume = window.volume;
+    skipSound.play();
 }
 
 function updateSkipButtonVisibility() {
