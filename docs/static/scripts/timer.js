@@ -1,5 +1,5 @@
 let timeSettings = {
-    pomodoro: 1500, 'short-break': 3, 'long-break': 900
+    pomodoro: 1500, 'short-break': 300, 'long-break': 900
 };
 let timeLeft = timeSettings.pomodoro;
 let timer;
